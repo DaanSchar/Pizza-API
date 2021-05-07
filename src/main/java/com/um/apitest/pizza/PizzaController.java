@@ -28,11 +28,11 @@ public class PizzaController {
     }
 
     /**
-     * @param pizzaId long to identify a specific pizza type
+     * @param pizzaId int to identify a specific pizza type
      * @return corresponding pizza of that pizzaId as it is received from the PizzaService class
      */
     @GetMapping("/pizza/{pizzaId}")
-    public Pizza getPizza(@PathVariable("pizzaId") long pizzaId) {
+    public Pizza getPizza(@PathVariable("pizzaId") int pizzaId) {
         return pizzaService.getPizza(pizzaId);
     }
 }

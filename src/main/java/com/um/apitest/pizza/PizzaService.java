@@ -24,15 +24,16 @@ public class PizzaService {
     }
 
     /**
-     * @param pizzaId long to identify a specific pizza type
+     * @param pizzaId int to identify a specific pizza type
      * @return corresponding pizza of that pizzaId as it retrieved from the pizza database
      */
-    public Pizza getPizza(long pizzaId) {
+    public Pizza getPizza(int pizzaId) {
         boolean exists = pizzaRepository.existsById(pizzaId);
 
         if (!exists) {
             throw new IllegalStateException("Pizza with id "  + pizzaId + "does not exist");
         }
+
         Optional<Pizza> optionalPizza = pizzaRepository.findById(pizzaId);
         return optionalPizza.get();
     }

@@ -12,12 +12,12 @@ public class Pizza {
     @SequenceGenerator(name = "pizza_sequence", sequenceName = "pizza_sequence", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pizza_sequence")
 
-    private long id;
+    private int id;
     private String name;
     private boolean vegetarian;
     private double price;
 
-    public Pizza(long id, String name, boolean vegetarian, double price) {
+    public Pizza(int id, String name, boolean vegetarian, double price) {
         this.id = id;
         this.name = name;
         this.vegetarian = vegetarian;
@@ -48,7 +48,7 @@ public class Pizza {
         return price;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
