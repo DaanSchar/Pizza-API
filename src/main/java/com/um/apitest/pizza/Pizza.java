@@ -2,15 +2,7 @@ package com.um.apitest.pizza;
 
 import javax.persistence.*;
 
-@Entity
-@Table(name = "pizza")
 public class Pizza {
-
-
-
-    @Id
-    @SequenceGenerator(name = "pizza_sequence", sequenceName = "pizza_sequence", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pizza_sequence")
 
     private int id;
     private String name;

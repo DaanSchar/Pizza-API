@@ -1,26 +1,21 @@
 package com.um.apitest.order;
 
-import com.um.apitest.order.util.Address;
-
-import javax.persistence.*;
 import java.time.LocalDate;
 
-@Entity
-@Table(name = "pizza_order")
-public class PizzaOrder {
-
-    @Id
-    @SequenceGenerator(name = "pizza_order_sequence", sequenceName = "pizza_order_sequence", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pizza_order_sequence")
+public class Order {
 
     private int id;
     private int customerId;
     private String status;
     private LocalDate orderedAt;
     private boolean takeAway;
-    private Address deliveryAddress;
+    private String deliveryAddress;
 
-    public PizzaOrder(int id, int customerId, String status, LocalDate orderedAt, boolean takeAway, Address deliveryAddress) {
+    /**
+     * TODO: fix address type and add pizza list
+     */
+
+    public Order(int id, int customerId, String status, LocalDate orderedAt, boolean takeAway, String deliveryAddress) {
         this.id = id;
         this.customerId = customerId;
         this.status = status;
@@ -29,7 +24,7 @@ public class PizzaOrder {
         this.deliveryAddress = deliveryAddress;
     }
 
-    public PizzaOrder(int customerId, String status, LocalDate orderedAt, boolean takeAway, Address deliveryAddress) {
+    public Order(int customerId, String status, LocalDate orderedAt, boolean takeAway, String deliveryAddress) {
         this.customerId = customerId;
         this.status = status;
         this.orderedAt = orderedAt;
@@ -37,7 +32,7 @@ public class PizzaOrder {
         this.deliveryAddress = deliveryAddress;
     }
 
-    public PizzaOrder(){}
+    public Order(){}
 
     public int getId() {
         return id;
@@ -79,11 +74,11 @@ public class PizzaOrder {
         this.takeAway = takeAway;
     }
 
-    public Address getDeliveryAddress() {
+    public String getDeliveryAddress() {
         return deliveryAddress;
     }
 
-    public void setDeliveryAddress(Address deliveryAddress) {
+    public void setDeliveryAddress(String deliveryAddress) {
         this.deliveryAddress = deliveryAddress;
     }
 

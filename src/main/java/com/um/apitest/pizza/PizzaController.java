@@ -23,7 +23,7 @@ public class PizzaController {
      * @return list containing all pizza types
      */
     @GetMapping("/pizza")
-    public List<Pizza> getPizzas() {
+    public List<Pizza> getAllPizzas() {
         return pizzaService.getPizzas();
     }
 
