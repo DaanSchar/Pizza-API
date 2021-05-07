@@ -3,7 +3,7 @@ package com.um.apitest.pizza;
 import javax.persistence.*;
 
 @Entity
-@Table
+@Table(name = "pizza")
 public class Pizza {
 
 
