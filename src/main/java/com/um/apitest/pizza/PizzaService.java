@@ -23,6 +23,8 @@ public class PizzaService {
      */
     public Pizza getPizza(int pizzaId) {
 
+        //TODO: add message 404: "pizza not found"
+
         List<Pizza> pizzaList = getPizzas();
 
         for (int i = 0; i < pizzaList.size(); i++)

@@ -1,7 +1,5 @@
 package com.um.apitest.pizza;
 
-import javax.persistence.*;
-
 public class Pizza {
 
     private int id;
@@ -24,7 +22,7 @@ public class Pizza {
 
     public Pizza(){}
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 

@@ -16,4 +16,13 @@ public class PizzaRepository {
         return pizzaList;
     }
 
+    public static Pizza getPizza(int pizzaId) {
+
+        for (int i = 0; i < pizzaList.size(); i++)
+            if (pizzaList.get(i).getId() == pizzaId)
+                return pizzaList.get(i);
+
+        throw new IllegalStateException("Pizza with id " + pizzaId + " does not exist");
+    }
+
 }

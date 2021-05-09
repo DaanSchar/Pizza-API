@@ -1,35 +1,32 @@
 package com.um.apitest.order;
 
-import java.time.LocalDate;
+import com.um.apitest.order.util.Address;
+import com.um.apitest.pizza.Pizza;
+
+import javax.persistence.Transient;
+import java.util.Date;
+import java.util.List;
 
 public class Order {
 
     private int id;
     private int customerId;
     private String status;
-    private LocalDate orderedAt;
+    private Date orderedAt;
     private boolean takeAway;
-    private String deliveryAddress;
+    private String paymentType;
+    private Address deliveryAddress;
+    private List<Pizza> pizzas;
 
-    /**
-     * TODO: fix address type and add pizza list
-     */
-
-    public Order(int id, int customerId, String status, LocalDate orderedAt, boolean takeAway, String deliveryAddress) {
+    public Order(int id, int customerId, String status, Date orderedAt, boolean takeAway, String paymentType, Address deliveryAddress, List<Pizza> pizzas) {
         this.id = id;
         this.customerId = customerId;
         this.status = status;
         this.orderedAt = orderedAt;
         this.takeAway = takeAway;
+        this.paymentType = paymentType;
         this.deliveryAddress = deliveryAddress;
-    }
-
-    public Order(int customerId, String status, LocalDate orderedAt, boolean takeAway, String deliveryAddress) {
-        this.customerId = customerId;
-        this.status = status;
-        this.orderedAt = orderedAt;
-        this.takeAway = takeAway;
-        this.deliveryAddress = deliveryAddress;
+        this.pizzas = pizzas;
     }
 
     public Order(){}
@@ -58,11 +55,11 @@ public class Order {
         this.status = status;
     }
 
-    public LocalDate getOrderedAt() {
+    public Date getOrderedAt() {
         return orderedAt;
     }
 
-    public void setOrderedAt(LocalDate orderedAt) {
+    public void setOrderedAt(Date orderedAt) {
         this.orderedAt = orderedAt;
     }
 
@@ -74,12 +71,28 @@ public class Order {
         this.takeAway = takeAway;
     }
 
-    public String getDeliveryAddress() {
+    public Address getDeliveryAddress() {
         return deliveryAddress;
     }
 
-    public void setDeliveryAddress(String deliveryAddress) {
+    public void setDeliveryAddress(Address deliveryAddress) {
         this.deliveryAddress = deliveryAddress;
+    }
+
+    public String getPaymentType() {
+        return paymentType;
+    }
+
+    public void setPaymentType(String paymentType) {
+        this.paymentType = paymentType;
+    }
+
+    public List<Pizza> getPizzas() {
+        return pizzas;
+    }
+
+    public void setPizzas(List<Pizza> pizzas) {
+        this.pizzas = pizzas;
     }
 
     @Override

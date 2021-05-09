@@ -1,9 +1,7 @@
 package com.um.apitest.order;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -18,13 +16,25 @@ public class OrderController {
     }
 
     @GetMapping("/order")
-    public List<Order> getAllPizzaOrders() {
-        return orderService.getAllPizzaOrders();
+    public List<Order> getAllOrders() {
+        return orderService.getAllOrders();
     }
 
     @GetMapping("/order/{customerId}")
-    public List<Order> getPizzaOrders(@PathVariable("customerId") int customerId) {
-        return orderService.getPizzaOrders(customerId);
+    public List<Order> getOrders(@PathVariable("customerId") int customerId) {
+        return orderService.getOrders(customerId);
     }
+
+    @PostMapping("/order")
+    public ResponseEntity<OrderResponse> submitOrder(@RequestBody OrderPost orderPost) {
+        return orderService.submitOrder(orderPost);
+    }
+
+    @PutMapping("/order/cancel/{order_id}")
+    public ResponseEntity<CancelResponse> cancelOrder(@PathVariable("order_id") int orderId) {
+        return orderService.cancelOrder(orderId);
+    }
+
+
 
 }
