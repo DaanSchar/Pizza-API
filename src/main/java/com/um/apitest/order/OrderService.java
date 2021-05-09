@@ -24,16 +24,13 @@ public class OrderService {
      * @param customerId customer we want to retrieve the order history of
      * @return list of all PizzaOrders containing this customerId
      */
-    public List<Order> getOrders(int customerId) {
+    public ResponseEntity getOrders(int customerId) {
         List<Order> orderList = getOrderHistory(customerId);
 
-        //TODO: add message 404: "Customer_ID not found"
-        //          message 400: "Invalid ID supplied"
-
         if (orderList == null || orderList.size() == 0)
-            throw new IllegalStateException("Customer with id " + customerId + " does not exist" );
+            return new ResponseEntity(new Message("Customer_ID " + customerId + " not found" ),HttpStatus.NOT_FOUND);
 
-        return orderList;
+        return new ResponseEntity(orderList, HttpStatus.ACCEPTED);
     }
 
 

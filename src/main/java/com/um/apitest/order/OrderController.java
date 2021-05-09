@@ -21,7 +21,7 @@ public class OrderController {
     }
 
     @GetMapping("/order/{customerId}")
-    public List<Order> getOrders(@PathVariable("customerId") int customerId) {
+    public ResponseEntity getOrders(@PathVariable("customerId") int customerId) {
         return orderService.getOrders(customerId);
     }
 
