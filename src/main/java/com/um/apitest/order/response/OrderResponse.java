@@ -1,4 +1,6 @@
-package com.um.apitest.order;
+package com.um.apitest.order.response;
+
+import com.um.apitest.order.Order;
 
 import java.util.Date;
 

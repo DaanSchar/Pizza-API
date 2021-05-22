@@ -1,4 +1,4 @@
-package com.um.apitest.order;
+package com.um.apitest.order.response;
 
 public class CancelResponse {
 

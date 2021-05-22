@@ -2,6 +2,10 @@ package com.um.apitest.order;
 
 import com.um.apitest.database.OrderRepository;
 import com.um.apitest.database.PizzaRepository;
+import com.um.apitest.order.post.OrderPost;
+import com.um.apitest.order.response.CancelResponse;
+import com.um.apitest.order.response.DeliveryTimeResponse;
+import com.um.apitest.order.response.OrderResponse;
 import com.um.apitest.order.util.Message;
 import com.um.apitest.pizza.Pizza;
 import org.springframework.http.HttpStatus;
@@ -20,34 +24,14 @@ public class OrderService {
 
     public OrderService() {}
 
-    /**
-     * @param customerId customer we want to retrieve the order history of
-     * @return list of all PizzaOrders containing this customerId
-     */
-    public ResponseEntity getOrders(int customerId) {
-        List<Order> orderList = getOrderHistory(customerId);
 
-        if (orderList == null || orderList.size() == 0)
-            return new ResponseEntity(new Message("Customer_ID " + customerId + " not found" ),HttpStatus.NOT_FOUND);
+    public ResponseEntity getOrderById(int orderId) {
+        Order order = getOrder(orderId);
 
-        return new ResponseEntity(orderList, HttpStatus.ACCEPTED);
-    }
+        if (order == null)
+            return new ResponseEntity(new Message("order_id " + orderId + " not found" ),HttpStatus.NOT_FOUND);
 
-
-    /**
-     * @param customerId customer we want to retrieve the order history of
-     * @return list of all PizzaOrders containing this customerId
-     */
-    private List<Order> getOrderHistory(int customerId) {
-        List<Order> allOrders = getAllOrders();
-        List<Order> customerOrders = new ArrayList<>();
-
-        for (int i = 0; i < allOrders.size(); i++) {
-            if(allOrders.get(i).getCustomerId() == customerId) {
-                customerOrders.add(allOrders.get(i));
-            }
-        }
-        return customerOrders;
+        return new ResponseEntity(order, HttpStatus.ACCEPTED);
     }
 
 
@@ -70,14 +54,21 @@ public class OrderService {
         OrderResponse response = new OrderResponse();
         response.setOrder(newOrder);
         response.setOrdered_at(newOrder.getOrderedAt());
-
-        // determine delivery time
-        long timeInMs = newOrder.getOrderedAt().getTime();
-        Date orderDate = new Date(timeInMs + (DELIVERY_TIME_IN_MIN * 60000));
-        response.setDelivery_time(orderDate);
+        response.setDelivery_time(getDeliveryTime(newOrder));
 
         OrderRepository.insert(newOrder);
-        return new ResponseEntity<OrderResponse>(response, HttpStatus.ACCEPTED);
+        return new ResponseEntity(response, HttpStatus.ACCEPTED);
+    }
+
+
+    /**
+     * returns new date with added delivery time
+     * @param order order we get the orderTime from
+     * @return orderDate + delivery time
+     */
+    public Date getDeliveryTime(Order order) {
+        long timeInMs = order.getOrderedAt().getTime();
+        return new Date(timeInMs + (DELIVERY_TIME_IN_MIN * 60000));
     }
 
 
@@ -128,18 +119,21 @@ public class OrderService {
     public ResponseEntity cancelOrder(int orderId) {
         Order order = getOrder(orderId);
 
+        if (order == null)
+            return new ResponseEntity(new Message("Order not found"), HttpStatus.NOT_FOUND);
+
         long orderTime = order.getOrderedAt().getTime();
         long cancelTime = new Date().getTime();
         long dTime = cancelTime - orderTime;
 
         if (dTime > 5 * 60000)
-            return new ResponseEntity<Message>(new Message("Cant cancel an order after 5 minutes have elapsed"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(new Message("Cant cancel an order after 5 minutes have elapsed"), HttpStatus.BAD_REQUEST);
 
         if (order.getStatus().equals("cancelled"))
-            return new ResponseEntity<Message>(new Message("Order has already been cancelled"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(new Message("Order has already been cancelled"), HttpStatus.BAD_REQUEST);
 
         order.setStatus("cancelled");
-        return new ResponseEntity<CancelResponse>(new CancelResponse(orderId, "cancelled"), HttpStatus.ACCEPTED);
+        return new ResponseEntity(new CancelResponse(orderId, "cancelled"), HttpStatus.ACCEPTED);
     }
 
 
@@ -148,16 +142,35 @@ public class OrderService {
      * @param orderId id of the order
      * @return Order object corresponding with the given orderId
      */
-    public Order getOrder(int orderId) {
+    private Order getOrder(int orderId) {
         List<Order> orderList = getAllOrders();
 
         for (int i = 0; i < orderList.size(); i++)
             if (orderList.get(i).getId() == orderId)
                 return orderList.get(i);
 
-        throw new IllegalStateException("order with id " + orderId + " does not exist");
+        return null;
     }
 
+    /**
+     * @param orderId id of the order
+     * @return response with delivery time
+     */
+    public ResponseEntity getDeliveryTime(int orderId) {
+
+        Order order = getOrder(orderId);
+
+        if (order == null)
+            return new ResponseEntity(new Message("Order not found"), HttpStatus.NOT_FOUND);
+
+        DeliveryTimeResponse response = new DeliveryTimeResponse();
+        response.setOrder(order);
+        response.setDeliveryTime(getDeliveryTime(order));
+
+        //TODO: Write method to get delivery time of order
+
+        return new ResponseEntity(response, HttpStatus.ACCEPTED);
+    }
 }
 
 

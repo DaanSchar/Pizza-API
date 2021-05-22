@@ -1,5 +1,8 @@
 package com.um.apitest.order;
 
+import com.um.apitest.order.post.OrderPost;
+import com.um.apitest.order.response.CancelResponse;
+import com.um.apitest.order.response.OrderResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,9 +23,14 @@ public class OrderController {
         return orderService.getAllOrders();
     }
 
-    @GetMapping("/order/{customerId}")
-    public ResponseEntity getOrders(@PathVariable("customerId") int customerId) {
-        return orderService.getOrders(customerId);
+    @GetMapping("/order/{orderId}")
+    public ResponseEntity getOrders(@PathVariable("orderId") int orderId) {
+        return orderService.getOrderById(orderId);
+    }
+
+    @GetMapping("/order/deliverytime/{order_id}")
+    public ResponseEntity getDeliveryTime(@PathVariable("order_id") int orderId) {
+        return orderService.getDeliveryTime(orderId);
     }
 
     @PostMapping("/order")
