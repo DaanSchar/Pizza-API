@@ -3,48 +3,48 @@ package com.um.apitest.order;
 import com.um.apitest.order.util.Address;
 import com.um.apitest.pizza.Pizza;
 
-import javax.persistence.Transient;
 import java.util.Date;
 import java.util.List;
 
 public class Order {
 
-    private int id;
-    private int customerId;
+    private int order_id;
+    private int customer_id;
     private String status;
-    private Date orderedAt;
+    private Date ordered_at;
+    private String note;
     private boolean takeAway;
-    private String paymentType;
-    private Address deliveryAddress;
+    private String payment_type;
+    private Address delivery_address;
     private List<Pizza> pizzas;
 
-    public Order(int id, int customerId, String status, Date orderedAt, boolean takeAway, String paymentType, Address deliveryAddress, List<Pizza> pizzas) {
-        this.id = id;
-        this.customerId = customerId;
+    public Order(int order_id, int customer_id, String status, Date ordered_at, boolean takeAway, String payment_type, Address delivery_address, List<Pizza> pizzas) {
+        this.order_id = order_id;
+        this.customer_id = customer_id;
         this.status = status;
-        this.orderedAt = orderedAt;
+        this.ordered_at = ordered_at;
         this.takeAway = takeAway;
-        this.paymentType = paymentType;
-        this.deliveryAddress = deliveryAddress;
+        this.payment_type = payment_type;
+        this.delivery_address = delivery_address;
         this.pizzas = pizzas;
     }
 
     public Order(){}
 
-    public int getId() {
-        return id;
+    public int getOrder_id() {
+        return order_id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setOrder_id(int order_id) {
+        this.order_id = order_id;
     }
 
-    public int getCustomerId() {
-        return customerId;
+    public int getCustomer_id() {
+        return customer_id;
     }
 
-    public void setCustomerId(int customerId) {
-        this.customerId = customerId;
+    public void setCustomer_id(int customer_id) {
+        this.customer_id = customer_id;
     }
 
     public String getStatus() {
@@ -55,12 +55,12 @@ public class Order {
         this.status = status;
     }
 
-    public Date getOrderedAt() {
-        return orderedAt;
+    public Date getOrdered_at() {
+        return (Date) ordered_at.clone();
     }
 
-    public void setOrderedAt(Date orderedAt) {
-        this.orderedAt = orderedAt;
+    public void setOrdered_at(Date ordered_at) {
+        this.ordered_at = ordered_at;
     }
 
     public boolean isTakeAway() {
@@ -71,20 +71,20 @@ public class Order {
         this.takeAway = takeAway;
     }
 
-    public Address getDeliveryAddress() {
-        return deliveryAddress;
+    public Address getDelivery_address() {
+        return delivery_address;
     }
 
-    public void setDeliveryAddress(Address deliveryAddress) {
-        this.deliveryAddress = deliveryAddress;
+    public void setDelivery_address(Address delivery_address) {
+        this.delivery_address = delivery_address;
     }
 
-    public String getPaymentType() {
-        return paymentType;
+    public String getPayment_type() {
+        return payment_type;
     }
 
-    public void setPaymentType(String paymentType) {
-        this.paymentType = paymentType;
+    public void setPayment_type(String payment_type) {
+        this.payment_type = payment_type;
     }
 
     public List<Pizza> getPizzas() {
@@ -95,15 +95,23 @@ public class Order {
         this.pizzas = pizzas;
     }
 
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
     @Override
     public String toString() {
         return "Order{" +
-                "id=" + id +
-                ", customerId=" + customerId +
+                "id=" + order_id +
+                ", customerId=" + customer_id +
                 ", status='" + status + '\'' +
-                ", orderedAt=" + orderedAt +
+                ", orderedAt=" + ordered_at +
                 ", takeAway=" + takeAway +
-                ", deliveryAddress=" + deliveryAddress +
+                ", deliveryAddress=" + delivery_address +
                 '}';
     }
 }

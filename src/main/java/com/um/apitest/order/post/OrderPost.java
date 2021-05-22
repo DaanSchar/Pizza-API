@@ -6,13 +6,14 @@ import java.util.List;
 
 public class OrderPost {
 
-    private List<PizzaOrder> pizzas;
+    private List<Integer> pizzas;
     private boolean takeaway;
     private String payment_type;
     private int customer_id;
+    private String note;
     private Address delivery_address;
 
-    public OrderPost(List<PizzaOrder> pizzas, boolean takeaway, String payment_type, int customerId, Address delivery_address) {
+    public OrderPost(List<Integer> pizzas, boolean takeaway, String payment_type, int customerId, Address delivery_address) {
         this.pizzas = pizzas;
         this.takeaway = takeaway;
         this.payment_type = payment_type;
@@ -22,11 +23,11 @@ public class OrderPost {
 
     public OrderPost(){}
 
-    public List<PizzaOrder> getPizzas() {
+    public List<Integer> getPizzas() {
         return pizzas;
     }
 
-    public void setPizzas(List<PizzaOrder> pizzas) {
+    public void setPizzas(List<Integer> pizzas) {
         this.pizzas = pizzas;
     }
 
@@ -62,6 +63,14 @@ public class OrderPost {
         this.delivery_address = delivery_address;
     }
 
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
     public String toString() {
         return "PostOrder{" +
                 "pizzas=" + pizzas +
@@ -71,4 +80,5 @@ public class OrderPost {
                 ", deliveryAddress=" + delivery_address +
                 '}';
     }
+
 }

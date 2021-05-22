@@ -53,7 +53,7 @@ public class OrderService {
 
         OrderResponse response = new OrderResponse();
         response.setOrder(newOrder);
-        response.setOrdered_at(newOrder.getOrderedAt());
+        response.setOrdered_at(newOrder.getOrdered_at());
         response.setDelivery_time(getDeliveryTime(newOrder));
 
         OrderRepository.insert(newOrder);
@@ -67,7 +67,7 @@ public class OrderService {
      * @return orderDate + delivery time
      */
     public Date getDeliveryTime(Order order) {
-        long timeInMs = order.getOrderedAt().getTime();
+        long timeInMs = order.getOrdered_at().getTime();
         return new Date(timeInMs + (DELIVERY_TIME_IN_MIN * 60000));
     }
 
@@ -80,17 +80,18 @@ public class OrderService {
     private Order convertToOrder(OrderPost orderPost) {
         Order newOrder = new Order();
 
-        newOrder.setDeliveryAddress(orderPost.getDeliveryAddress());
-        newOrder.setPaymentType(orderPost.getPaymentType());
-        newOrder.setCustomerId(orderPost.getCustomerId());
+        newOrder.setDelivery_address(orderPost.getDeliveryAddress());
+        newOrder.setPayment_type(orderPost.getPaymentType());
+        newOrder.setCustomer_id(orderPost.getCustomerId());
+        newOrder.setNote(orderPost.getNote());
         newOrder.setTakeAway(orderPost.getTakeaway());
         newOrder.setPizzas(convertPizzaList(orderPost));
         newOrder.setStatus("In Progress");
 
         Date date = new Date();
-        newOrder.setOrderedAt(date);
+        newOrder.setOrdered_at(date);
 
-        newOrder.setId(OrderRepository.getOrderList().size()+1);
+        newOrder.setOrder_id(OrderRepository.getOrderList().size()+1);
 
         return newOrder;
     }
@@ -107,7 +108,7 @@ public class OrderService {
         List<Pizza> pizzas = new ArrayList<>();
 
         for (int i = 0; i < orderPost.getPizzas().size(); i++)
-            pizzas.add(PizzaRepository.getPizza(orderPost.getPizzas().get(i).getPizza_id()));
+            pizzas.add(PizzaRepository.getPizza(orderPost.getPizzas().get(i)));
 
         return pizzas;
     }
@@ -122,7 +123,7 @@ public class OrderService {
         if (order == null)
             return new ResponseEntity(new Message("Order not found"), HttpStatus.NOT_FOUND);
 
-        long orderTime = order.getOrderedAt().getTime();
+        long orderTime = order.getOrdered_at().getTime();
         long cancelTime = new Date().getTime();
         long dTime = cancelTime - orderTime;
 
@@ -146,7 +147,7 @@ public class OrderService {
         List<Order> orderList = getAllOrders();
 
         for (int i = 0; i < orderList.size(); i++)
-            if (orderList.get(i).getId() == orderId)
+            if (orderList.get(i).getOrder_id() == orderId)
                 return orderList.get(i);
 
         return null;

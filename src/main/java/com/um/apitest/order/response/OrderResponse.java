@@ -11,7 +11,7 @@ public class OrderResponse {
 
     public OrderResponse(Order order, Date delivery_time) {
         this.order = order;
-        this.ordered_at = order.getOrderedAt();
+        this.ordered_at = order.getOrdered_at();
         this.delivery_time = delivery_time;
     }
 
